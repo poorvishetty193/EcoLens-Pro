@@ -2,26 +2,43 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
-import { useUser } from './context/UserContext';
-import { useBadgeEvaluator } from './hooks/useBadgeEvaluator';
+import { SimulationProvider } from './context/SimulationContext';
 import Sidebar from './components/layout/Sidebar';
 import MobileNav from './components/layout/MobileNav';
 
-import Dashboard from './pages/Dashboard';
-import LogActivity from './pages/LogActivity';
-import AiCenter from './pages/AiCenter';
-import Gamification from './pages/Gamification';
-import Onboarding from './pages/Onboarding';
+// Feature Components Phase 1
+import LivingEarth from './components/Earth/LivingEarth';
+import FuturePortal from './components/Features/FuturePortal';
+import ParallelUniverse from './components/Features/ParallelUniverse';
+import AiDebateChamber from './components/Features/AiDebateChamber';
+import CityDigitalTwin from './components/Features/CityDigitalTwin';
+import ClimateStrategist from './components/Features/ClimateStrategist';
+import PlanetDna from './components/Features/PlanetDna';
+import EcoQuests from './components/Features/EcoQuests';
+import FutureImpactStory from './components/Features/FutureImpactStory';
+
+// Feature Components Phase 2
+import GreenMultiverse from './components/Features/GreenMultiverse';
+import ClimateNews from './components/Features/ClimateNews';
+import DigitalForest from './components/Features/DigitalForest';
+import ButterflyEffect from './components/Features/ButterflyEffect';
+
+// Feature Components Phase 3
+import TimeCapsule from './components/Features/TimeCapsule';
+import GenerationSimulator from './components/Features/GenerationSimulator';
+import ClimateBlackBox from './components/Features/ClimateBlackBox';
+import SaveTheSpecies from './components/Features/SaveTheSpecies';
+import CampusMode from './components/Features/CampusMode';
+import AiInventor from './components/Features/AiInventor';
 
 const MainLayout = ({ children }) => {
-  useBadgeEvaluator();
   return (
     <div className="flex min-h-screen bg-bg-primary text-text-primary">
       <div className="ambient-glow"></div>
       <div className="ambient-glow-2"></div>
       
       <Sidebar />
-      <main className="flex-1 pb-20 lg:pb-0 overflow-x-hidden relative z-10">
+      <main className="flex-1 pb-20 lg:pb-0 overflow-x-hidden relative z-10 custom-scrollbar">
         {children}
       </main>
       <MobileNav />
@@ -29,23 +46,30 @@ const MainLayout = ({ children }) => {
   );
 };
 
-const ProtectedRoute = ({ children }) => {
-  const { user, isReady } = useUser();
-  if (!isReady) return <div className="h-screen flex items-center justify-center text-white">Loading EcoLens...</div>;
-  if (!user) return <Navigate to="/onboarding" />;
-  return <MainLayout>{children}</MainLayout>;
-};
-
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/log" element={<ProtectedRoute><LogActivity /></ProtectedRoute>} />
-        <Route path="/ai" element={<ProtectedRoute><AiCenter /></ProtectedRoute>} />
-        <Route path="/gamification" element={<ProtectedRoute><Gamification /></ProtectedRoute>} />
+        <Route path="/" element={<LivingEarth />} />
+        <Route path="/portal" element={<div className="p-6"><FuturePortal /></div>} />
+        <Route path="/multiverse" element={<div className="p-6"><GreenMultiverse /></div>} />
+        <Route path="/news" element={<div className="p-6"><ClimateNews /></div>} />
+        <Route path="/forest" element={<div className="p-6"><DigitalForest /></div>} />
+        <Route path="/butterfly" element={<div className="p-6"><ButterflyEffect /></div>} />
+        <Route path="/universe" element={<div className="p-6"><ParallelUniverse /></div>} />
+        <Route path="/capsule" element={<div className="p-6"><TimeCapsule /></div>} />
+        <Route path="/generation" element={<div className="p-6"><GenerationSimulator /></div>} />
+        <Route path="/blackbox" element={<div className="p-6"><ClimateBlackBox /></div>} />
+        <Route path="/species" element={<div className="p-6"><SaveTheSpecies /></div>} />
+        <Route path="/campus" element={<div className="p-6"><CampusMode /></div>} />
+        <Route path="/inventor" element={<div className="p-6"><AiInventor /></div>} />
+        <Route path="/debate" element={<div className="p-6"><AiDebateChamber /></div>} />
+        <Route path="/city" element={<div className="p-6"><CityDigitalTwin /></div>} />
+        <Route path="/strategist" element={<div className="p-6"><ClimateStrategist /></div>} />
+        <Route path="/dna" element={<div className="p-6"><PlanetDna /></div>} />
+        <Route path="/quests" element={<div className="p-6"><EcoQuests /></div>} />
+        <Route path="/story" element={<div className="p-6"><FutureImpactStory /></div>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AnimatePresence>
@@ -54,8 +78,12 @@ const AnimatedRoutes = () => {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
+    <SimulationProvider>
+      <BrowserRouter>
+        <MainLayout>
+          <AnimatedRoutes />
+        </MainLayout>
+      </BrowserRouter>
+    </SimulationProvider>
   );
 }
