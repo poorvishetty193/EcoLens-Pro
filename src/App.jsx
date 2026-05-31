@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { AnimatePresence } from 'framer-motion';
 
 import { useUser } from './context/UserContext';
+import { useBadgeEvaluator } from './hooks/useBadgeEvaluator';
 import Sidebar from './components/layout/Sidebar';
 import MobileNav from './components/layout/MobileNav';
 
@@ -13,6 +14,7 @@ import Gamification from './pages/Gamification';
 import Onboarding from './pages/Onboarding';
 
 const MainLayout = ({ children }) => {
+  useBadgeEvaluator();
   return (
     <div className="flex min-h-screen bg-bg-primary text-text-primary">
       <div className="ambient-glow"></div>
