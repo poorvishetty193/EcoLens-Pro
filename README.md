@@ -8,6 +8,7 @@
 
 ### 🌌 Cinematic Features
 
+- **FutureCast Network (Climate News):** A live television broadcast from tomorrow. Submit a scenario and watch a 3D Holographic News Globe react as you scrub through a chronological timeline of breaking news, field reports from AI correspondents across different channels, and citizen interviews from 2030 to 2100.
 - **Future City Nexus (Digital Twin):** A living, breathing 3D metropolis simulation. Tweak transport and industry policies to watch smog clear, neon buildings light up, and urban forests literally grow out of the concrete in real-time. Features an AI Mayor Advisor.
 - **The Climate Council (Debate Chamber):** A high-stakes UN-style global summit. Submit a policy and watch 4 distinct AI personas (Scientist, Economist, Citizen, Strategist) debate it in a 3D Reality Projection chamber, complete with dramatic interruptions, voting, and a final UN resolution.
 - **Future Echoes (Impact Story):** An interactive 5-chapter cinematic AI documentary. Watch a procedural 3D city evolve through decades as an AI narrator recounts the long-term legacy of your environmental choices.

@@ -237,24 +237,61 @@ export const getImpactStory = async (actions) => {
 };
 
 export const getClimateNews = async (scenario) => {
-  const cacheKey = `news_${scenario}`;
+  const cacheKey = `cast_${scenario}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    news: [
-      { year: 2030, headline: "Headline here", snippet: "Snippet here" }
-    ]
+    isEmergency: false,
+    timeline: [
+      {
+        year: 2030,
+        breakingHeadline: "String (Massive global event)",
+        narratorIntro: "String (News anchor introduction)",
+        channels: {
+          environment: { reporter: "Dr. Aris", headline: "String", detail: "String" },
+          economy: { reporter: "J. Vance", headline: "String", detail: "String" },
+          society: { reporter: "M. Lin", headline: "String", detail: "String" }
+        },
+        interview: { name: "String", role: "String", quote: "String" },
+        marketImpact: "+15% Renewable Growth"
+      },
+      {
+        year: 2050,
+        breakingHeadline: "String (Massive global event)",
+        narratorIntro: "String (News anchor introduction)",
+        channels: {
+          environment: { reporter: "Dr. Aris", headline: "String", detail: "String" },
+          economy: { reporter: "J. Vance", headline: "String", detail: "String" },
+          society: { reporter: "M. Lin", headline: "String", detail: "String" }
+        },
+        interview: { name: "String", role: "String", quote: "String" },
+        marketImpact: "Global Fossil Fleet Retired"
+      },
+      {
+        year: 2100,
+        breakingHeadline: "String (Massive global event)",
+        narratorIntro: "String (News anchor introduction)",
+        channels: {
+          environment: { reporter: "Dr. Aris", headline: "String", detail: "String" },
+          economy: { reporter: "J. Vance", headline: "String", detail: "String" },
+          society: { reporter: "M. Lin", headline: "String", detail: "String" }
+        },
+        interview: { name: "String", role: "String", quote: "String" },
+        marketImpact: "Post-Scarcity Energy Grid"
+      }
+    ],
+    finalLegacy: "String (Cinematic conclusion of the timeline)"
   };
 
   const data = await fetchGroqAPI(
-    "You are a future news generator. For a given climate scenario, generate exactly 3 future newspaper headlines for years 2030, 2035, and 2040.",
+    "You are the central AI for the FutureCast Network, a global news broadcast from tomorrow. Based on the scenario, generate a complete chronological timeline of news broadcasts for 2030, 2050, and 2100.",
     `Scenario: ${scenario}`,
     schemaExample
   );
 
-  setCachedResponse(cacheKey, data.news);
-  return data.news;
+  setCachedResponse(cacheKey, data);
+  return data;
 };
 
 export const getClimateProphecy = async (city) => {

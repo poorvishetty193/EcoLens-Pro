@@ -138,10 +138,10 @@ export default function AiInventor() {
             <motion.div 
               key="hologram"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              className="flex-1 grid grid-cols-12 gap-8 items-center mt-8 pointer-events-none"
+              className="flex-1 grid grid-cols-12 gap-8 items-center mt-8 pointer-events-none min-h-0 overflow-hidden"
             >
               {/* Left: Startup DNA */}
-              <div className="col-span-4 bg-black/60 backdrop-blur-xl border border-white/10 p-6 rounded-3xl pointer-events-auto">
+              <div className="col-span-4 bg-black/60 backdrop-blur-xl border border-white/10 p-6 rounded-3xl pointer-events-auto h-full max-h-full overflow-y-auto custom-scrollbar">
                 <div className="flex items-center gap-2 text-[#00ffcc] text-xs uppercase tracking-widest mb-6"><Dna size={16}/> Startup DNA</div>
                 
                 <h2 className="text-4xl font-bold mb-2">{startup.dna.name}</h2>
