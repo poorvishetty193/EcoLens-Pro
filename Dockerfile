@@ -1,23 +1,20 @@
 # Build frontend
-FROM node:18-alpine AS client-builder
-WORKDIR /app/client
-COPY client/package*.json ./
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-COPY client/ ./
+COPY . .
 RUN npm run build
 
-# Build backend and serve
-FROM node:18-alpine
-WORKDIR /app/server
-COPY server/package*.json ./
-RUN npm install --production
-COPY server/ ./
-# Copy built frontend
-COPY --from=client-builder /app/client/dist ./public
+# Serve with nginx
+FROM nginx:alpine
+# Copy built files to nginx serve directory
+COPY --from=builder /app/dist /usr/share/nginx/html
+# Fallback routing for SPA (React Router)
+RUN echo 'server { listen 8080; location / { root /usr/share/nginx/html; index index.html index.htm; try_files $uri $uri/ /index.html; } }' > /etc/nginx/conf.d/default.conf
 
 # Expose port (Cloud Run sets PORT env variable automatically, defaulting to 8080)
 ENV PORT=8080
 EXPOSE 8080
 
-# Start server
-CMD ["node", "index.js"]
+CMD ["nginx", "-g", "daemon off;"]

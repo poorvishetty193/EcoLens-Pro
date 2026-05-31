@@ -1,47 +1,48 @@
-# EcoLens Pro 🌍
+# EcoLens Pro 🌱
 
-EcoLens Pro is an AI-Powered Planetary Intelligence Platform for Personal & Community Climate Action. It goes beyond simple carbon tracking by offering real-time data integration, advanced AI forecasting, and engaging gamification features.
+An AI-Powered Planetary Intelligence Platform for Personal & Community Climate Action.
 
-**"See your planet. Own your impact."**
+EcoLens Pro transforms how people relate to climate change — making it personal, gamified, and actionable. It fuses live environmental data feeds, Gemini AI intelligence, a gamified achievement system, and real-time tracking into one immersive dark-mode web application.
 
-## Architecture
+## Features
 
-```text
-client (React/Vite) <--> server (Express) <--> Supabase (Postgres)
-                                          <--> Claude API
-                                          <--> Open-Meteo API
-                                          <--> Electricity Maps API
-```
+- **Single Page Application (SPA)**: Pure Vite + React frontend architecture.
+- **Privacy-First**: No database. All user data is securely stored in browser `localStorage`.
+- **Live Integrations**:
+  - Gemini 2.0 Flash for AI coaching, forecasting, and scenario simulations.
+  - Open-Meteo for real-time weather and AQI context.
+  - Electricity Maps for live carbon intensity of the energy grid.
+- **Gamification**: Earn XP, unlock levels, achieve up to 30 custom badges, and conquer 20 daily missions.
+- **Comprehensive Logging**: Detailed calculators for Transport, Energy, Food, Shopping, and Digital footprints.
 
-## Tech Stack
-- **Frontend**: React 18, Vite, Tailwind CSS (v4), Framer Motion, Recharts, Three.js
-- **Backend**: Node.js, Express, Upstash Redis
-- **Database/Auth**: Supabase
-- **AI**: Anthropic Claude API
+## Quick Start
 
-## Prerequisites
+### Prerequisites
 - Node.js 18+
-- A Supabase Project
-- Anthropic API Key (Claude)
-- Electricity Maps API Key
+- npm or yarn
 
-## Setup Instructions
+### Installation
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   Copy `.env.example` to `.env` and fill in your keys.
+   ```
+   VITE_GEMINI_API_KEY=your_gemini_key_here
+   VITE_ELECTRICITY_MAPS_API_KEY=your_electricity_maps_key_here
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-1. **Clone the repository**
-2. **Database Setup**
-   - Go to your Supabase project's SQL Editor.
-   - Run the SQL script found in `supabase_schema.sql` to initialize tables and RLS policies.
-3. **Backend Setup**
-   - Navigate to `/server`.
-   - Copy `.env.example` to `.env` and fill in your keys.
-   - Run `npm install` and `npm run dev`.
-4. **Frontend Setup**
-   - Navigate to `/client`.
-   - Copy `.env.example` to `.env` and fill in the Supabase keys.
-   - Run `npm install` and `npm run dev`.
+## Deployment (Docker / Cloud Run)
 
-## Deployment
-A `Dockerfile` is included for easy deployment to Google Cloud Run, rendering the static client assets through the Express server in production.
+The repository includes a multi-stage Dockerfile that builds the Vite application and serves it via an NGINX alpine image, perfect for Google Cloud Run deployment.
 
-## License
-MIT
+```bash
+docker build -t ecolens-pro .
+docker run -p 8080:8080 ecolens-pro
+```
