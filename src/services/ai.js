@@ -63,30 +63,52 @@ const fetchGroqAPI = async (systemInstruction, userPrompt, schemaExample) => {
 };
 
 export const getFutureProjections = async (scenario) => {
-  const cacheKey = `future_portal_${scenario}`;
+  const cacheKey = `portal_${scenario}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    projections: [
+    isPositiveTimeline: true,
+    timeline: [
       {
-        year: 1,
-        carbonReduction: 10,
-        waterSaved: 5,
-        airQuality: 15,
-        climateScoreIncrease: 5
+        year: 2030,
+        earthState: { color: "#00ffcc", atmosphere: 0.5 },
+        historicalEvent: "String (Major turning point)",
+        civilizationState: "String (Description of cities/tech)",
+        narratorText: "String (Cinematic narration)",
+        childLife: "Age 10: String (How a child lives today)",
+        stats: { treesRestored: 1000000, carbonPrevented: 50 }
+      },
+      {
+        year: 2050,
+        earthState: { color: "#00aaff", atmosphere: 0.8 },
+        historicalEvent: "String (Major turning point)",
+        civilizationState: "String (Description of cities/tech)",
+        narratorText: "String (Cinematic narration)",
+        childLife: "Age 30: String (Adulthood in this future)",
+        stats: { treesRestored: 5000000, carbonPrevented: 200 }
+      },
+      {
+        year: 2100,
+        earthState: { color: "#00ff00", atmosphere: 1.0 },
+        historicalEvent: "String (Major turning point)",
+        civilizationState: "String (Description of cities/tech)",
+        narratorText: "String (Cinematic narration)",
+        childLife: "Age 80: String (Legacy in this future)",
+        stats: { treesRestored: 20000000, carbonPrevented: 800 }
       }
-    ]
+    ],
+    collapseMessage: "String (Emotional final message upon leaving)"
   };
 
   const data = await fetchGroqAPI(
-    "You are an advanced climate simulation engine. Given a scenario, output an array of 4 projections for years 1, 5, 10, and 20 inside a 'projections' key.",
+    "You are the Future Earth Portal's intelligence. For a given climate scenario, generate a complete 3-stage timeline of Earth's evolution across the 21st century.",
     `Scenario: ${scenario}`,
     schemaExample
   );
 
-  setCachedResponse(cacheKey, data.projections);
-  return data.projections;
+  setCachedResponse(cacheKey, data);
+  return data;
 };
 
 export const getDebateResponse = async (decision) => {
