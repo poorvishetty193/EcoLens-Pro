@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { storage } from '../utils/storage';
+import { calculateLevel } from '../utils/xpCalculator';
 
 export const UserContext = createContext();
 
@@ -31,7 +32,6 @@ export const UserProvider = ({ children }) => {
     setXpState(newXp);
     
     // Check level up
-    const { calculateLevel } = require('../utils/xpCalculator');
     const newLevel = calculateLevel(newXp);
     if (newLevel > level) {
       storage.setLevel(newLevel);

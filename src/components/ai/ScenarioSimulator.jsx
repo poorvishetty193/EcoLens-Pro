@@ -37,7 +37,7 @@ export default function ScenarioSimulator() {
       const simResult = await getScenarioSimulation(scenarioToTest, userAnnualKg);
       setResult(simResult);
     } catch (err) {
-      addToast('error', err.message || 'Failed to simulate scenario');
+      addToast({ type: 'warning', title: 'Simulation Error', message: err.message || 'Failed to simulate scenario' });
     } finally {
       setLoading(false);
     }

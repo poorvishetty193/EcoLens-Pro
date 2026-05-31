@@ -35,7 +35,7 @@ export default function AiCoach() {
       const result = await getCoachAnalysis(data14Day);
       setAnalysis(result);
     } catch (err) {
-      addToast('error', err.message || 'Failed to generate coaching analysis');
+      addToast({ type: 'warning', title: 'AI Error', message: err.message || 'Failed to generate coaching analysis' });
     } finally {
       setLoading(false);
     }
