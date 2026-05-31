@@ -90,21 +90,56 @@ export const getFutureProjections = async (scenario) => {
 };
 
 export const getDebateResponse = async (decision) => {
-  const cacheKey = `debate_${decision}`;
+  const cacheKey = `council_${decision}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    Scientist: "String response",
-    Economist: "String response",
-    PolicyMaker: "String response",
-    Citizen: "String response",
-    Recommendation: "String final summary"
+    turns: [
+      {
+        speaker: "Scientist",
+        quote: "String (Opening argument focusing on climate models)",
+        theme: "science",
+        confidence: 95,
+        evidence: "High",
+        risk: "Low"
+      },
+      {
+        speaker: "Economist",
+        quote: "String (Counter-argument focusing on budget/cost)",
+        theme: "economy",
+        confidence: 82,
+        evidence: "Medium",
+        risk: "High"
+      },
+      {
+        speaker: "Citizen",
+        isInterruption: true,
+        quote: "String (Passionate interruption about daily life impact)",
+        theme: "citizen",
+        confidence: 99,
+        evidence: "Anecdotal",
+        risk: "Medium"
+      },
+      {
+        speaker: "Strategist",
+        quote: "String (Policy implementation pathway and political feasibility)",
+        theme: "policy",
+        confidence: 75,
+        evidence: "Medium",
+        risk: "Low"
+      }
+    ],
+    vote: {
+      result: "APPROVED or REJECTED",
+      supportPercentage: 86
+    },
+    resolution: "String (Official UN-style final declaration resolving the debate)"
   };
 
   const data = await fetchGroqAPI(
-    "You simulate a climate policy debate. For the given decision, provide exactly one response per persona and a final recommendation.",
-    `Decision: ${decision}`,
+    "You are the orchestration engine for The Climate Council, a high-stakes UN-style summit. Generate a highly dramatic, sequential debate script involving 4 personas (Scientist, Economist, Citizen, Strategist). Include at least one interruption, final vote percentages, and a formal resolution.",
+    `Proposal: ${decision}`,
     schemaExample
   );
 
@@ -113,22 +148,42 @@ export const getDebateResponse = async (decision) => {
 };
 
 export const getClimateStrategy = async (goal) => {
-  const cacheKey = `strategy_${goal}`;
+  const cacheKey = `command_center_${goal}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    actionPlan: ["Action 1", "Action 2"],
-    timeline: "2 Years",
-    estimatedCost: "$1.5 Billion",
-    expectedCarbonReduction: "500k Tons",
-    difficultyLevel: "High",
-    priorityRanking: 1
+    experts: [
+      { role: "Economist", quote: "String (Opinion on cost vs ROI)" },
+      { role: "Climate Scientist", quote: "String (Opinion on carbon impact)" },
+      { role: "Urban Planner", quote: "String (Opinion on infrastructure)" }
+    ],
+    roadmap: {
+      phase1: "String (0-6 Months focus)",
+      phase2: "String (1-3 Years focus)",
+      phase3: "String (3-10 Years focus)"
+    },
+    strategies: [
+      { 
+        id: "s1",
+        title: "String (e.g. Solar Array)", 
+        impact: "Number (1-100)", 
+        cost: "Number (1-100)", 
+        difficulty: "String (Easy/Medium/Hard)",
+        risk: "String (Short risk description)" 
+      }
+      // Need 4-6 strategies
+    ],
+    legacy: {
+      peopleImpacted: "String (e.g. 50,000+)",
+      carbonPrevented: "String (e.g. 100k Tons)",
+      treesEquivalent: "String (e.g. 2 Million)"
+    }
   };
 
   const data = await fetchGroqAPI(
-    "You are a climate strategist. Output a structured strategy to achieve the user's goal.",
-    `Goal: ${goal}`,
+    "You are the AI Strategy Council for a global Climate Command Center. Analyze the user's goal and generate a comprehensive, structured JSON response containing expert opinions, a phased roadmap, specific interactive strategies (with numerical impact/cost 1-100), and final legacy metrics.",
+    `User Goal: ${goal}`,
     schemaExample
   );
 
@@ -136,19 +191,21 @@ export const getClimateStrategy = async (goal) => {
   return data;
 };
 
-export const getPlanetDna = async (choices) => {
-  const cacheKey = `dna_${choices}`;
+export const getPlanetDna = async (timeline) => {
+  const cacheKey = `planet_dna_${timeline}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    personality: "Forest Guardian",
-    description: "You deeply value biodiversity and natural carbon sinks."
+    archetype: "String (e.g., Forest Guardian, Energy Architect, Planet Restorer, etc.)",
+    creature: "String (e.g., Forest Dragon, Solar Phoenix, Ocean Leviathan)",
+    story: "String (2-3 sentence cinematic origin story about their environmental legacy)",
+    legacy: "String (e.g., Protected 12 species, Prevented 80,000kg CO2)"
   };
 
   const data = await fetchGroqAPI(
-    "Based on the user's choices, assign them a sustainability personality from: Forest Guardian, Energy Optimizer, Waste Warrior, Mobility Champion, Circular Economy Builder.",
-    `Choices: ${choices}`,
+    "You are the sequencer of the EcoVerse Planet DNA Lab. Based on the provided timeline context, assign the user an epic Environmental Archetype, a Spirit Creature, an Origin Story, and a future Legacy projection.",
+    `Timeline Context: ${timeline}`,
     schemaExample
   );
 
@@ -223,20 +280,33 @@ export const getClimateProphecy = async (city) => {
 };
 
 export const getSustainabilityInventor = async (problem) => {
-  const cacheKey = `inventor_${problem}`;
+  const cacheKey = `lab_${problem}`;
   const cached = getCachedResponse(cacheKey);
   if (cached) return cached;
 
   const schemaExample = {
-    productName: "String",
-    productIdea: "String",
-    businessModel: "String",
-    sustainabilityImpact: "String",
-    implementationPlan: ["Step 1", "Step 2"]
+    dna: {
+      name: "String (Futuristic Startup Name)",
+      mission: "String (One sentence mission)",
+      tech: "String (e.g., AI-driven biotech, IoT robotics)",
+      innovationScore: 92,
+      fundingScore: 85
+    },
+    investors: [
+      { role: "Climate Investor", quote: "String (Financial perspective)", verdict: "PASS or FUND" },
+      { role: "Engineer", quote: "String (Technical feasibility)", verdict: "PASS or FUND" },
+      { role: "Policy Expert", quote: "String (Regulatory hurdles)", verdict: "PASS or FUND" },
+      { role: "Customer", quote: "String (Market adoption)", verdict: "PASS or FUND" }
+    ],
+    impact: {
+      metricName: "String (e.g., Tons of CO2 Prevented, Liters of Water Saved)",
+      valuePerUser: 15
+    },
+    legacy: "String (Cinematic description of how this changes the world in 2050)"
   };
 
   const data = await fetchGroqAPI(
-    "You are a climate startup incubator. Given a problem, invent a product/startup solution.",
+    "You are the core intelligence of the Climate Innovation Lab. For the given environmental problem, invent a billion-dollar, highly futuristic climate-tech startup. Generate its DNA, investor feedback, and future legacy.",
     `Problem: ${problem}`,
     schemaExample
   );
@@ -385,6 +455,95 @@ export const getLegacyNarrative = async (universeA, universeB) => {
   const data = await fetchGroqAPI(
     "You are the narrator of the EcoVerse multiverse. Compare these two colliding timelines and deliver a powerful, emotional, cinematic concluding sentence asking the user which future they will leave behind.",
     `Timelines: ${universeA} vs ${universeB}`,
+    schemaExample
+  );
+
+  setCachedResponse(cacheKey, data);
+  return data;
+};
+
+export const getSpeciesRecoveryStory = async (speciesName) => {
+  const cacheKey = `species_${speciesName}`;
+  const cached = getCachedResponse(cacheKey);
+  if (cached) return cached;
+
+  const schemaExample = {
+    story: "String narrative paragraph"
+  };
+
+  const data = await fetchGroqAPI(
+    "You are a narrator for a National Geographic style documentary. Write a short, emotional 2-sentence story describing how this species returned from the brink of extinction due to global habitat restoration.",
+    `Species: ${speciesName}`,
+    schemaExample
+  );
+
+  setCachedResponse(cacheKey, data);
+  return data;
+};
+
+export const getMissionBriefing = async (campaignName) => {
+  const cacheKey = `mission_${campaignName}`;
+  const cached = getCachedResponse(cacheKey);
+  if (cached) return cached;
+
+  const schemaExample = {
+    situation: "String (1-2 sentences describing the current dire climate crisis in this region)",
+    objective: "String (1-2 sentences outlining the specific restoration goals)",
+    outcome: "String (1 sentence projecting the positive future impact if successful)"
+  };
+
+  const data = await fetchGroqAPI(
+    "You are the AI Mission Commander of the EcoVerse Future Earth Simulator. Generate a concise, high-stakes military/scientific briefing for a global planetary restoration campaign.",
+    `Campaign: ${campaignName}`,
+    schemaExample
+  );
+
+  setCachedResponse(cacheKey, data);
+  return data;
+};
+
+export const getDocumentaryScript = async (policy) => {
+  const cacheKey = `doc_${policy}`;
+  const cached = getCachedResponse(cacheKey);
+  if (cached) return cached;
+
+  const schemaExample = {
+    c1_decision: "String (Narrator: The state of the world in 2026 before the policy)",
+    c2_changes: "String (Narrator: 2028 - The immediate short-term impact of the policy)",
+    c3_turning_point: "String (Narrator: 2035 - The massive scaling of the initiative)",
+    c4_new_generation: "String (Narrator: 2050 - A new generation born into a changed world)",
+    c5_legacy: "String (Narrator: 2075 - The final legacy of the decision)",
+    news_2030: "String (Headline format)",
+    news_2040: "String (Headline format)",
+    news_2060: "String (Headline format)",
+    interview_name: "String (e.g., Dr. Elena Rostova)",
+    interview_role: "String (e.g., Urban Farmer, 2050)",
+    interview_quote: "String (1-2 sentences from the citizen's perspective)"
+  };
+
+  const data = await fetchGroqAPI(
+    "You are a visionary AI screenwriter for a cinematic climate documentary spanning 50 years. Given a policy, generate a 5-chapter narration script, future news headlines, and a fictional citizen interview.",
+    `Policy: ${policy}`,
+    schemaExample
+  );
+
+  setCachedResponse(cacheKey, data);
+  return data;
+};
+
+export const getCityAdvisorInsight = async (policies) => {
+  const cacheKey = `mayor_${policies.renewables}_${policies.transport}_${policies.forests}_${policies.industry}`;
+  const cached = getCachedResponse(cacheKey);
+  if (cached) return cached;
+
+  const schemaExample = {
+    headline: "String (e.g., SMOG LEVELS CRITICAL)",
+    insight: "String (1-2 sentences of specific advice from the AI Mayor based on the current policy slider values)"
+  };
+
+  const data = await fetchGroqAPI(
+    "You are the AI Mayor Advisor of the Future City Nexus. Analyze the current city policy metrics (0-100 scale) and provide a short, urgent insight on the city's health.",
+    `Policies: Renewables(${policies.renewables}%), Transport(${policies.transport}%), Forests(${policies.forests}%), Industry(${policies.industry}%)`,
     schemaExample
   );
 

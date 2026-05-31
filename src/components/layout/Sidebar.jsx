@@ -28,7 +28,7 @@ const NAV_ITEMS = [
 export default function Sidebar() {
   return (
     <div className="hidden lg:flex flex-col w-72 h-screen border-r border-white/5 bg-bg-surface/50 backdrop-blur-md sticky top-0 custom-scrollbar overflow-y-auto">
-      <div className="p-6 sticky top-0 bg-bg-surface/90 backdrop-blur-md z-10 border-b border-white/5">
+      <div className="p-6 sticky top-0 bg-[#030712] z-50 border-b border-white/5 shadow-md">
         <h1 className="text-2xl font-heading font-bold text-white tracking-wide flex items-center gap-2">
           <Globe className="text-accent-teal" /> EcoVerse <span className="text-accent-teal font-light">AI</span>
         </h1>
