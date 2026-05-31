@@ -4,7 +4,7 @@ import { useWeatherData } from '../../hooks/useWeatherData';
 import { useUser } from '../../context/UserContext';
 import { useEmissions } from '../../hooks/useEmissions';
 import { getWeatherEmoji } from '../../utils/formatters';
-import { getWeatherInsight } from '../../services/aiService';
+import { getDailyInsight } from '../../services/aiService';
 import LoadingSkeleton from '../shared/LoadingSkeleton';
 import { Wind, Droplets } from 'lucide-react';
 
@@ -22,14 +22,9 @@ export default function WeatherImpactWidget() {
         // We reuse the generic daily insight prompt from aiService, but tailor it if we had a specific weather service
         // Since aiService doesn't have a strict getWeatherInsight, we'll adapt getDailyInsight or do a custom call here.
         // For PRD: "Gemini micro-insight... It's 34°C today — your AC likely added ~2.1kg CO₂."
-        
-        // I will implement a quick fallback here. Realistically, we'd add `getWeatherInsight` to aiService.
-        // Let's assume aiService exports it now (I will update aiService to have it, or just use getDailyInsight).
-        // Let's use a dynamic string fallback until AI loads.
         setInsight(`It's ${Math.round(data.temp)}°C today. AI is analyzing impact...`);
         
         try {
-          const { getDailyInsight } = require('../../services/aiService');
           const aiResponse = await getDailyInsight({ weather: data, todayEmissions: todayKg });
           setInsight(aiResponse);
         } catch(e) {
