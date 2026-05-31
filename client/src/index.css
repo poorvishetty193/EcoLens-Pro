@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-glass: var(--bg-glass);
+  
+  --color-accent-green: var(--accent-green);
+  --color-accent-teal: var(--accent-teal);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-red: var(--accent-red);
+  --color-accent-purple: var(--accent-purple);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  
+  --color-border-subtle: var(--border-subtle);
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+:root {
+  --bg-primary: #050f0a;
+  --bg-surface: #0a1a10;
+  --bg-glass: rgba(255, 255, 255, 0.04);
+  --accent-green: #00e676;
+  --accent-teal: #1de9b6;
+  --accent-amber: #ffab40;
+  --accent-red: #ff5252;
+  --accent-purple: #7c4dff;
+  --text-primary: #e8f5e9;
+  --text-secondary: #81c784;
+  --border-subtle: rgba(0, 230, 118, 0.15);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.ambient-glow {
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(0, 230, 118, 0.1) 0%, rgba(5, 15, 10, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 20s infinite alternate ease-in-out;
+}
+
+.ambient-glow-2 {
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(29, 233, 182, 0.08) 0%, rgba(5, 15, 10, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: float 25s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(5%, 5%) scale(1.1);
+  }
+}
