@@ -136,7 +136,7 @@ export default function ForecastEngine() {
               <XAxis dataKey="date" stroke="rgba(255,255,255,0.3)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
               <YAxis stroke="rgba(255,255,255,0.3)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
-              <ReferenceLine x={chartData.find(d => !d.isForecast && baseData[baseData.indexOf(d)+1]?.isForecast)?.date} stroke="rgba(255,255,255,0.2)" label={{ position: 'top', value: 'Today', fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
+              <ReferenceLine x={chartData[6]?.date} stroke="rgba(255,255,255,0.2)" label={{ position: 'top', value: 'Today', fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
               
               <Bar dataKey="historical" fill="var(--accent-teal)" radius={[4, 4, 0, 0]} isAnimationActive={false} />
               <Bar dataKey="forecast" fill="rgba(29, 233, 182, 0.4)" stroke="var(--accent-teal)" strokeDasharray="3 3" radius={[4, 4, 0, 0]} isAnimationActive={false} />
