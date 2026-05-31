@@ -6,6 +6,7 @@ import AnimatedCounter from '../shared/AnimatedCounter';
 import LoadingSkeleton from '../shared/LoadingSkeleton';
 import { useUser } from '../../context/UserContext';
 import { getScenarioSimulation } from '../../services/aiService';
+import { useToast } from '../../context/ToastContext';
 
 const PRESET_SCENARIOS = [
   "🌱 Go fully vegan",
@@ -25,15 +26,21 @@ export default function ScenarioSimulator() {
   const [isCustom, setIsCustom] = useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { addToast } = useToast();
 
   const handleSimulate = async () => {
     setLoading(true);
     const scenarioToTest = isCustom ? customScenario : selectedScenario;
     const userAnnualKg = user?.baseline?.estimated_annual_kg || 4500;
     
-    const simResult = await getScenarioSimulation(scenarioToTest, userAnnualKg);
-    setResult(simResult);
-    setLoading(false);
+    try {
+      const simResult = await getScenarioSimulation(scenarioToTest, userAnnualKg);
+      setResult(simResult);
+    } catch (err) {
+      addToast('error', err.message || 'Failed to simulate scenario');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const currentScore = user?.baseline?.planet_score || 50;

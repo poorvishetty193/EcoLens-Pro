@@ -4,6 +4,7 @@ import GlassCard from '../shared/GlassCard';
 import LoadingSkeleton from '../shared/LoadingSkeleton';
 import { useEmissions } from '../../hooks/useEmissions';
 import { getCoachAnalysis } from '../../services/aiService';
+import { useToast } from '../../context/ToastContext';
 import { getCategoryColor } from '../../utils/formatters';
 import { ChevronRight } from 'lucide-react';
 
@@ -11,6 +12,7 @@ export default function AiCoach() {
   const { logs } = useEmissions();
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { addToast } = useToast();
 
   const handleAnalyze = async () => {
     setLoading(true);
@@ -29,9 +31,14 @@ export default function AiCoach() {
       }, {})
     };
 
-    const result = await getCoachAnalysis(data14Day);
-    setAnalysis(result);
-    setLoading(false);
+    try {
+      const result = await getCoachAnalysis(data14Day);
+      setAnalysis(result);
+    } catch (err) {
+      addToast('error', err.message || 'Failed to generate coaching analysis');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const StrategyCard = ({ strategy }) => {

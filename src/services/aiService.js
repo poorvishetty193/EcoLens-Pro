@@ -34,13 +34,13 @@ export const getCoachAnalysis = async (data14Day) => {
     Return ONLY a JSON object with no markdown fences:
     {
       "summary": "2 sentences, personal, uses their numbers",
-      "top_sources": [ { "category": "string", "avg_kg_day": number, "insight": "string" } ], // array of 3
+      "top_sources": [ { "category": "string", "avg_kg_day": number, "insight": "string" } ],
       "strategies": [
         { 
           "action": "string", "category": "string", "co2_saved_kg_week": number, 
-          "difficulty": 1|2|3, "why_it_matters": "1 sentence"
+          "difficulty": 1, "why_it_matters": "1 sentence"
         }
-      ], // array of 5
+      ],
       "motivational_note": "1 sentence, encouraging"
     }`;
 
@@ -52,7 +52,7 @@ export const getCoachAnalysis = async (data14Day) => {
     return parsed;
   } catch (error) {
     console.error("AI Coach Error:", error);
-    return null;
+    throw new Error(error.message || "Failed to generate coaching analysis.");
   }
 };
 
@@ -76,7 +76,7 @@ export const getScenarioSimulation = async (scenario, userAnnualKg) => {
     return JSON.parse(stripMarkdown(result.response.text()));
   } catch (error) {
     console.error("Scenario Simulation Error:", error);
-    return null;
+    throw new Error(error.message || "Failed to simulate scenario.");
   }
 };
 
