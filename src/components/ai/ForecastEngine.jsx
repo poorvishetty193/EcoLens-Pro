@@ -129,17 +129,17 @@ export default function ForecastEngine() {
   return (
     <GlassCard title="Emission Forecast">
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="flex-1 min-h-[300px]">
+        <div className="flex-1 h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
               <XAxis dataKey="date" stroke="rgba(255,255,255,0.3)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
               <YAxis stroke="rgba(255,255,255,0.3)" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }} />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+              <Tooltip content={<CustomTooltip />} cursor={false} />
               <ReferenceLine x={chartData[6]?.date} stroke="rgba(255,255,255,0.2)" label={{ position: 'top', value: 'Today', fill: 'rgba(255,255,255,0.5)', fontSize: 10 }} />
               
-              <Bar dataKey="historical" fill="var(--accent-teal)" radius={[4, 4, 0, 0]} isAnimationActive={false} />
-              <Bar dataKey="forecast" fill="rgba(29, 233, 182, 0.4)" stroke="var(--accent-teal)" strokeDasharray="3 3" radius={[4, 4, 0, 0]} isAnimationActive={false} />
+              <Bar dataKey="historical" fill="var(--accent-teal)" radius={[4, 4, 0, 0]} isAnimationActive={false} activeBar={false} />
+              <Bar dataKey="forecast" fill="rgba(29, 233, 182, 0.4)" stroke="var(--accent-teal)" strokeDasharray="3 3" radius={[4, 4, 0, 0]} isAnimationActive={false} activeBar={false} />
             </ComposedChart>
           </ResponsiveContainer>
           
