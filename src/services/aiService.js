@@ -13,7 +13,6 @@ const getModel = () => {
   return getGenAI().getGenerativeModel({ 
     model: "gemini-2.0-flash",
     generationConfig: { 
-      responseMimeType: "application/json",
       temperature: 0.7
     }
   });
